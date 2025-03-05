@@ -1,0 +1,11 @@
+trigger:
+- develop
+
+pr: none
+
+variables:
+  - template: 'vars/shared.yml'
+  - template: 'vars/prod.yml'
+
+stages:
+- template: release.yml

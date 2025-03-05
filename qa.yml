@@ -4,7 +4,8 @@ trigger:
 pr: none
 
 variables:
-  - template: 'vars.yml'
+  - template: 'vars/shared.yml'
+  - template: 'vars/qa.yml'
 
 stages:
 - template: release.yml
