@@ -8,7 +8,7 @@ stages:
     pool:
       vmImage: 'windows-latest'
     steps:
-    - checkout: none
+    # - checkout: none
     - task: DownloadPipelineArtifact@2
       inputs:
         targetPath: $(Build.ArtifactStagingDirectory)
@@ -17,12 +17,12 @@ stages:
       displayName: 'Getting previous patch version'
       inputs:
         targetType: 'inline'
-        script: "ls"
+        script: "cd $(Build.ArtifactStagingDirectory); ls"
     - task: Bash@3
       displayName: 'Getting previous patch version'
       inputs:
         targetType: 'filePath'
-        filePath: '$(Build.ArtifactStagingDirectory)/latest-patch-version.sh'
+        filePath: './latest-patch-version.sh'
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
