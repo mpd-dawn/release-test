@@ -1,8 +1,6 @@
 variables:
-- name: is_pre_release
-  value: $[ ne(variables['postfix'], 'prod') ]
 - name: patch_version
-  value: $[ counter(variables['postfix'], 0) ]
+  value: $[ counter(variables['Build.SourceBranchName'], 0) ]
 - name: version_no_from_branch_name
   value: $[ format('{0}', variables['Build.SourceBranchName']) ]
 - name: version_no_from_branch_name
