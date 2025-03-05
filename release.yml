@@ -1,0 +1,27 @@
+stages:
+- stage: Release
+  # dependsOn: [ '' ]
+  displayName: 'Release'
+  jobs: 
+  - job: CreateRelease
+    displayName: 'Create release'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - checkout: none
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        targetPath: $(Build.ArtifactStagingDirectory)
+      displayName: 'Downloading artifacts'
+    - task: GithubRelease@1 
+      displayName: 'Creating GitHub Release'
+      inputs:
+        gitHubConnection: 'GitHub OAuth Connection'
+        title: 'Growzen $(semantic_version_no)'
+        repositoryName: '$(Build.Repository.Name)'
+        tagSource: userSpecifiedTag
+        tag: 'v$(semantic_version_no)'
+        isPreRelease: $(is_pre_release)
+        changeLogType: issueBased
+        action: create
+        assets: '$(Build.ArtifactStagingDirectory)/**/*'

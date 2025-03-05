@@ -1,0 +1,10 @@
+trigger:
+- develop
+
+pr: none
+
+variables:
+  - template: 'vars.yml'
+
+stages:
+- template: release.yml

@@ -1,0 +1,19 @@
+variables:
+- name: is_pre_release
+  value: $[ ne(variables['postfix'], 'prod') ]
+- name: patch_version
+  value: $[ counter(variables['postfix'], 0) ]
+- name: source_branch_name
+  value: $[ format('{0}', variables['Build.SourceBranchName']) ]
+- name: version_no_from_branch_name
+  value: $[ replace(variables['source_branch_name'], 'v', '') ]
+- name: is_pre_release
+  value: false
+# - name: version_no
+#   value: $[ format(replace(replace(startsWith(variables['source_branch_name'], 'v'), 'True', '{0}'), 'False', '{1}'), variables['version_no_from_branch_name'], '0.0.0') ]
+# - name: semantic_version_no_without_build
+#   value: $[ format('{0}{1}', variables['version_no'], variables['version_no_env_segment']) ]
+
+  
+- name: semantic_version_no
+  value: $[ format('v{0}.{1}-{2}', variables['version_no_from_branch_name'], variables['patch_version'], variables['version_no_env_segment']) ]
