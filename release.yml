@@ -13,6 +13,11 @@ stages:
       inputs:
         targetPath: $(Build.ArtifactStagingDirectory)
       displayName: 'Downloading artifacts'
+    - task: Bash@3
+      displayName: 'Getting previous patch version'
+      inputs:
+        targetType: 'filePath'
+        filePath: 'latest-patch-version.sh'
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
