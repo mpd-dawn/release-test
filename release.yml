@@ -18,7 +18,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          patch_version=$(./latest-patch-version.sh)
+          patch_version=$(./latest-patch-version.sh $(Build.SourceBranchName))
           
           semantic_version_no=$(printf "%s.%s%s" "$(Build.SourceBranchName)" "$patch_version" "$(version_no_env_segment)")
           echo "##vso[task.setvariable variable=semantic_version_no]$semantic_version_no"
