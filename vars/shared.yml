@@ -2,7 +2,7 @@ variables:
 - name: build_environment
   value: $[ variables['postfix'] ]
 - name: latest_patch_version
-  value: '' ## Is coming from the latest-patch-version.sh
+  value: 'abc' ## Is coming from the latest-patch-version.sh
 - name: patch_version ## we also have to deploy to QA first in order to increment the patch version
   value: $[ format(replace(replace(eq(variables['build_environment'], 'qa'), True, '{0}'), False, '{0}'), counter(variables['Build.SourceBranchName'], 0), variables['latest_patch_version'] )]
 # - name: patch_version

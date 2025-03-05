@@ -1,4 +1,5 @@
 #!/bin/bash
+echo $build_environment
 
 # Get current commit
 current_commit=$(git rev-parse HEAD)

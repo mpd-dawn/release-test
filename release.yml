@@ -16,11 +16,6 @@ stages:
     - task: Bash@3
       displayName: 'Getting previous patch version'
       inputs:
-        targetType: 'inline'
-        script: "cd $(Build.ArtifactStagingDirectory); ls"
-    - task: Bash@3
-      displayName: 'Getting previous patch version'
-      inputs:
         targetType: 'filePath'
         filePath: './latest-patch-version.sh'
     - task: GithubRelease@1 
