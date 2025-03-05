@@ -17,7 +17,7 @@ stages:
       displayName: 'Getting previous patch version'
       inputs:
         targetType: 'filePath'
-        filePath: 'latest-patch-version.sh'
+        filePath: './latest-patch-version.sh'
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
