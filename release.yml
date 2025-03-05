@@ -18,6 +18,12 @@ stages:
       inputs:
         targetType: 'filePath'
         filePath: './latest-patch-version.sh'
+    - task: Bash@3
+      displayName: 'Export latest patch version'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "##vso[task.setvariable variable=latest_patch_version]$latest_patch_version"
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
