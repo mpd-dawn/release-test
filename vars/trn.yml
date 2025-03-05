@@ -1,0 +1,5 @@
+variables:
+- name: version_no_env_segment
+  value: 'training'
+- name: postfix
+  value: 'trn'
