@@ -4,7 +4,7 @@ variables:
 - name: latest_patch_version
   value: $[ variables['patch_version'] ]
 - name: patch_version
-  value: $[ format(replace(replace(eq(variables['build_environment'], 'qa'), True, '{0}'), False, '{1}'), counter(variables['Build.SourceBranchName'], 0), variables['latest_patch_version'] ] )]
+  value: $[ format(replace(replace(eq(variables['build_environment'], 'qa'), True, '{0}'), False, '{1}'), counter(variables['Build.SourceBranchName'], 0), variables['latest_patch_version'] )]
 # - name: patch_version
 #   value: $[ counter(variables['Build.SourceBranchName'], 0) ]
 - name: version_no_from_branch_name
