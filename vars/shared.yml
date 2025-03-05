@@ -14,4 +14,4 @@ variables:
 
   
 - name: semantic_version_no
-  value: $[ format('v{0}.{1}-{2}', variables['version_no_from_branch_name'], variables['patch_version'], variables['version_no_env_segment']) ]
+  value: $[ format('{0}.{1}-{2}', variables['version_no_from_branch_name'], variables['patch_version'], variables['version_no_env_segment']) ]
