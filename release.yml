@@ -16,7 +16,7 @@ stages:
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
-        gitHubConnection: 'mpd-dawn'
+        gitHubConnection: 'github.com_mpd-dawn'
         title: 'Growzen $(semantic_version_no)'
         repositoryName: '$(Build.Repository.Name)'
         tagSource: userSpecifiedTag
