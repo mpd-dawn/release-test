@@ -1,5 +1,3 @@
 variables:
 - name: version_no_env_segment
   value: '-qa'
-- name: postfix
-  value: 'qa'

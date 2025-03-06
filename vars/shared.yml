@@ -1,17 +1,3 @@
 variables:
-- name: build_environment
-  value: $[ variables['postfix'] ]
-# - name: latest_patch_version
-#   value: 'abc' ## Is coming from the latest-patch-version.sh
-# - name: patch_version ## we also have to deploy to QA first in order to increment the patch version
-#   value: $[ format(replace(replace(eq(variables['build_environment'], 'qa'), True, '{0}'), False, '{0}'), counter(variables['Build.SourceBranchName'], 0), variables['latest_patch_version'] )]
-# - name: patch_version
-#   value: $[ counter(variables['Build.SourceBranchName'], 0) ]
-- name: version_no_from_branch_name
-  value: $[ format('{0}', variables['Build.SourceBranchName']) ]
-- name: version_no_from_branch_name
-  value: variables['version_no_from_branch_name']
 - name: is_pre_release
   value: false  
-# - name: semantic_version_no
-#   value: $[ format('{0}.{1}-{2}', variables['version_no_from_branch_name'], $(patch_version), variables['version_no_env_segment']) ]
