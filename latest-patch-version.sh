@@ -24,7 +24,7 @@ for tag in $tags; do
     fi
   fi
 done
-echo "Latest tag: $latest_tag"
+
 if [ -z "$latest_tag" ]; then
   latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
 fi
