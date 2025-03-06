@@ -37,9 +37,11 @@ fi
 # Extract the major, minor, and patch versions from the latest tag
 IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
 
-if [ "$env" != "$env_suffix" ]; then
+if [ "-$env" != "$env_suffix" ]; then
   patch_version=$patch
 fi
+echo $env_suffix
+echo $env
 
 
 # Extract the major and minor versions from the branch name
@@ -49,7 +51,7 @@ minor=$(echo $branch_name | awk -F'.' '{print $2}')
 # Check if the major or minor version from the branch name has changed compared to the latest tag
 if [ "$major" != "$tag_major" ] || [ "$minor" != "$tag_minor" ]; then
   patch_version=0
-elif [ "$env" == "$env_suffix" ]; then
+elif [ "-$env" == "$env_suffix" ]; then
   patch_version=$((patch + 1))
 fi
 
