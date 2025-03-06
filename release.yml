@@ -38,6 +38,8 @@ stages:
         tagSource: userSpecifiedTag
         tag: 'v$(semantic_version_no)'
         isPreRelease: $(is_pre_release)
+        changeLogCompareToRelease: 'lastFullRelease'
+        addChangeLog: true
         changeLogType: issueBased
         action: create
         assets: '$(Build.ArtifactStagingDirectory)/**/*'

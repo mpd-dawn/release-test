@@ -15,6 +15,10 @@ branch_name=$1
 # Environment suffix of the tag. If environment is 'qa' this should be '-qa'.
 env_suffix=$2
 
+# Extract the major and minor versions from the branch name
+major=$(echo $branch_name | awk -F'.' '{print $1}' | sed 's/v//')
+minor=$(echo $branch_name | awk -F'.' '{print $2}')
+
 # Find the latest tag based on version number and environment suffix
 # This is to support a tag having the same commit id as the previous tag
 tags=$(git tag)
@@ -26,10 +30,7 @@ for tag in $tags; do
     fi
   fi
 done
-
-if [ -z "$latest_tag" ]; then
-  latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-fi
+echo "Latest tag: $latest_tag"
 
 # Extract the major, minor, and patch versions from the latest tag
 IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
@@ -38,10 +39,6 @@ IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
 if [ "-$env" != "$env_suffix" ]; then
   patch_version=$patch
 fi
-
-# Extract the major and minor versions from the branch name
-major=$(echo $branch_name | awk -F'.' '{print $1}' | sed 's/v//')
-minor=$(echo $branch_name | awk -F'.' '{print $2}')
 
 # Check if the major or minor version from the branch name has changed compared to the latest tag
 if [ "$major" != "$tag_major" ] || [ "$minor" != "$tag_minor" ]; then
