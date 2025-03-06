@@ -38,3 +38,4 @@ stages:
         changeLogType: issueBased
         action: create
         assets: '$(Build.ArtifactStagingDirectory)/**/*'
+#
