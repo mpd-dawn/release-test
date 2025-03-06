@@ -35,6 +35,6 @@ stages:
         changeLogCompareToRelease: 'lastNonDraftReleaseByTag'
         changeLogCompareToReleaseTag: $(latest_env_tag)
         addChangeLog: true
-        changeLogType: issueBased
+        changeLogType: commitBased
         action: create
         assets: '$(Build.ArtifactStagingDirectory)/**/*'
