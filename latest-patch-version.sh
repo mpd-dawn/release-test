@@ -5,10 +5,10 @@ branch_name=$1
 
 # Get the latest tag of the current commit if it exists
 current_commit=$(git rev-parse HEAD)
-tags=$(git tag --contains $current_commit)
 
 # Find the latest tag based on version number
 # This is to support a tag having the same commit id as the previous tag
+tags=$(git tag)
 latest_tag=""
 for tag in $tags; do
   if [[ $tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+- ]]; then
@@ -18,13 +18,16 @@ for tag in $tags; do
   fi
 done
 
-# Checks if latest_tag is empty
-if [ -z "$latest_tag" ]; then
-  latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-  patch_version=$(echo $latest_tag | awk -F'[.-]' '{print $3}')  
-else
-  patch_version=0
-fi
+echo $latest_tag
+
+# # Checks if latest_tag is empty
+# if [ -z "$latest_tag" ]; then
+#   latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+#   patch_version=$(echo $latest_tag | awk -F'[.-]' '{print $3}')  
+# else
+#   patch_version=0
+# fi
+# echo $latest_tag
 
 # Extract the major, minor, and patch versions from the latest tag
 IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
@@ -33,7 +36,7 @@ IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
 major=$(echo $branch_name | awk -F'.' '{print $1}' | sed 's/v//')
 minor=$(echo $branch_name | awk -F'.' '{print $2}')
 
-# Check if the major or minor version has changed
+# Check if the major or minor version from the branch name has changed compared to the latest tag
 if [ "$major" != "$tag_major" ] || [ "$minor" != "$tag_minor" ]; then
   patch_version=0
 else
