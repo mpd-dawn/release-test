@@ -40,9 +40,6 @@ IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
 if [ "-$env" != "$env_suffix" ]; then
   patch_version=$patch
 fi
-echo $env_suffix
-echo $env
-
 
 # Extract the major and minor versions from the branch name
 major=$(echo $branch_name | awk -F'.' '{print $1}' | sed 's/v//')
