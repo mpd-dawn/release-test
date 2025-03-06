@@ -1,6 +1,5 @@
 stages:
 - stage: Release
-  # dependsOn: [ '' ]
   displayName: 'Release'
   jobs: 
   - job: CreateRelease
@@ -8,7 +7,6 @@ stages:
     pool:
       vmImage: 'windows-latest'
     steps:
-    # - checkout: none
     - task: DownloadPipelineArtifact@2
       inputs:
         targetPath: $(Build.ArtifactStagingDirectory)
