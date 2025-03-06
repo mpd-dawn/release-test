@@ -13,7 +13,7 @@ current_commit=$(git rev-parse HEAD)
 tags=$(git tag)
 latest_tag=""
 for tag in $tags; do
-  if [[ $tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+- ]]; then
+  if [[ $tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
     if [ -z "$latest_tag" ] || [ "$(printf '%s\n' "$tag" "$latest_tag" | sort -V | tail -n1)" == "$tag" ]; then
       latest_tag=$tag
     fi
