@@ -18,7 +18,7 @@ for tag in $tags; do
   fi
 done
 
-echo $latest_tag
+# echo $latest_tag
 
 # # Checks if latest_tag is empty
 # if [ -z "$latest_tag" ]; then
