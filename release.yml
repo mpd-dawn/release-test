@@ -20,13 +20,7 @@ stages:
           
           semantic_version_no=$(printf "%s.%s%s" "$(Build.SourceBranchName)" "$patch_version" "$(version_no_env_segment)")
           echo "##vso[task.setvariable variable=semantic_version_no]$semantic_version_no"
-          echo $semantic_version_no
-    - task: Bash@3
-      displayName: 'Echo semantic version number'
-      inputs:
-        targetType: 'inline'
-        script: |
-          echo "Semantic version number: $(semantic_version_no)"
+          echo "##vso[task.setvariable variable=latest_env_tag]$latest_env_tag"
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
@@ -36,7 +30,8 @@ stages:
         tagSource: userSpecifiedTag
         tag: 'v$(semantic_version_no)'
         isPreRelease: $(is_pre_release)
-        changeLogCompareToRelease: 'lastFullRelease'
+        changeLogCompareToRelease: 'lastNonDraftReleaseByTag'
+        changeLogCompareToReleaseTag: $latest_env_tag
         addChangeLog: true
         changeLogType: issueBased
         action: create
