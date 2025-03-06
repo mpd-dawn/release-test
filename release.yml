@@ -33,7 +33,7 @@ stages:
         tag: 'v$(semantic_version_no)'
         isPreRelease: $(is_pre_release)
         changeLogCompareToRelease: 'lastNonDraftReleaseByTag'
-        changeLogCompareToReleaseTag: $latest_env_tag
+        changeLogCompareToReleaseTag: $(latest_env_tag)
         addChangeLog: true
         changeLogType: issueBased
         action: create
