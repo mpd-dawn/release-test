@@ -30,7 +30,6 @@ for tag in $tags; do
     fi
   fi
 done
-echo "Latest tag: $latest_tag"
 
 # Extract the major, minor, and patch versions from the latest tag
 IFS='.-' read -r tag_major tag_minor patch env <<< "${latest_tag#v}"
