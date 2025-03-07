@@ -25,7 +25,7 @@ stages:
             latest_env_tag=$(git tag --list "v*[0-9]" | sort -V | tail -n 1)
             buildIdSegment=''
           else
-            latest_env_tag=$(git tag --list "v*$(version_no_env_segment)" | sort -V | tail -n 1)
+            latest_env_tag=$(git tag --list "v*$(version_no_env_segment)-*" | sort -V | tail -n 1)
             buildIdSegment='-$(Build.BuildId)'
           fi
 
