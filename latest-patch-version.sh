@@ -40,8 +40,14 @@ fi
 
 # Check if the tag with the current patch version already exists and increment the patch version if it does.
 # This is to support deploying 1.5 to QA (resulting in 1.5.1-qa) and then to Training (resulting in 1.5.1-training) and then afterwards deploying to QA again from the same branch (resulting in 1.5.2-qa).
-while git tag | grep -q "^v$major.$minor.$patch_version$env_suffix"; do
-  patch_version=$((patch + 1))
-done
+if [ -z "$env_suffix" ]; then
+  while [ -n "$(git tag -l "v$major.$minor.$patch_version")" ]; do
+    patch_version=$((patch_version + 1))
+  done
+else
+  while [ -n "$(git tag -l "v$major.$minor.$patch_version$env_suffix*")" ]; do
+    patch_version=$((patch_version + 1))
+  done
+fi
 
 echo $patch_version
