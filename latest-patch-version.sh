@@ -21,16 +21,7 @@ major=$(echo $branch_name | awk -F'.' '{print $1}' | sed 's/v//')
 minor=$(echo $branch_name | awk -F'.' '{print $2}')
 
 # Find the latest tag based on version number
-# This is to support a tag having the same commit id as the previous tag
-tags=$(git tag)
-latest_tag=""
-for tag in $tags; do
-  if [[ $tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-    if [ -z "$latest_tag" ] || [ "$(printf '%s\n' "$tag" "$latest_tag" | sort -V | tail -n1)" == "$tag" ]; then
-      latest_tag=$tag
-    fi
-  fi
-done
+latest_tag=$(git tag -l "v$major.$minor.*" | sort -V | tail -n1)
 
 # Extract the major, minor, and patch versions from the latest tag
 IFS='.-' read -r tag_major tag_minor patch env buildnumber <<< "${latest_tag#v}"
