@@ -23,11 +23,14 @@ stages:
 
           if [ -z "$(version_no_env_segment)" ]; then
             latest_env_tag=$(git tag --list "v*[0-9]" | sort -V | tail -n 1)
+            buildIdSegment=''
           else
             latest_env_tag=$(git tag --list "v*$(version_no_env_segment)" | sort -V | tail -n 1)
+            buildIdSegment='-$(Build.BuildId)'
           fi
 
           echo "##vso[task.setvariable variable=latest_env_tag]$latest_env_tag"
+          echo "##vso[task.setvariable variable=buildIdSegment]$buildIdSegment"
     - task: GithubRelease@1 
       displayName: 'Creating GitHub Release'
       inputs:
@@ -35,8 +38,8 @@ stages:
         title: 'Growzen $(semantic_version_no)'
         repositoryName: '$(Build.Repository.Name)'
         tagSource: userSpecifiedTag
-        tag: 'v$(semantic_version_no)'
-        isPreRelease: $(is_pre_release)
+        tag: 'v$(semantic_version_no)$(buildIdSegment)'
+        isPreRelease: false
         changeLogCompareToRelease: 'lastNonDraftReleaseByTag'
         changeLogCompareToReleaseTag: $(latest_env_tag)
         addChangeLog: true
