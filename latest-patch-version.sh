@@ -30,6 +30,7 @@ IFS='.-' read -r tag_major tag_minor patch env buildnumber <<< "${latest_tag#v}"
 if [ "-$env" != "$env_suffix" ]; then
   patch_version=$patch
 fi
+  echo $patch_version
 
 # Check if the major or minor version from the branch name has changed compared to the latest tag
 if [ "$major" != "$tag_major" ] || [ "$minor" != "$tag_minor" ]; then
@@ -37,11 +38,20 @@ if [ "$major" != "$tag_major" ] || [ "$minor" != "$tag_minor" ]; then
 elif [ "-$env" == "$env_suffix" ]; then
   patch_version=$((patch + 1))
 fi
+  echo $patch_version
 
 # Check if the tag with the current patch version already exists and increment the patch version if it does.
 # This is to support deploying 1.5 to QA (resulting in 1.5.1-qa) and then to Training (resulting in 1.5.1-training) and then afterwards deploying to QA again from the same branch (resulting in 1.5.2-qa).
-while git tag | grep -q "^v$major.$minor.$patch_version$env_suffix"; do
-  patch_version=$((patch + 1))
-done
+echo "^v$major.$minor.$patch_version$env_suffix"
+
+if [ -z "$env_suffix" ]; then
+  while [ -n "$(git tag -l "v$major.$minor.$patch_version")" ]; do
+    patch_version=$((patch_version + 1))
+  done
+else
+  while [ -n "$(git tag -l "v$major.$minor.$patch_version$env_suffix*")" ]; do
+    patch_version=$((patch_version + 1))
+  done
+fi
 
 echo $patch_version
